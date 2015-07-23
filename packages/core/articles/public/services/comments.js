@@ -9,19 +9,19 @@ angular.module('mean.articles').factory('Comments', [
             if ( status === 'PENDING') {
             	return [{
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'PENDING',
 		            content: 'Test test test test test',
 		            user: 'Amin'
 		        }, {
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'PENDING',
 		            content: 'Test test test test test',
 		            user: 'Amin'
 		        }, {
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'PENDING',
 		            content: 'Test test test test test',
 		            user: 'Amin'
@@ -29,25 +29,26 @@ angular.module('mean.articles').factory('Comments', [
             } else if ( status === 'APPROVED') {
             	return [{
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'APPROVED',
 		            content: 'Test test test test test',
 		            user: 'Amin'
 		        }, {
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'APPROVED',
 		            content: 'Test test test test test',
 		            user: 'Amin'
 		        }, {
 		            id: '1',
-		            createdAt: '20:20:20:20',
+		            createdAt: '1288323623006',
 		            status: 'APPROVED',
 		            content: 'Test test test test test',
 		            user: 'Amin'
 		        }]
             }
         };
-        
+    	
+    	return Comments;
     }
 ]);

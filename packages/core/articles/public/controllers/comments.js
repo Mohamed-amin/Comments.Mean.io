@@ -2,14 +2,10 @@
 
 angular.module('mean.articles').controller('CommentsController', ['$scope', '$stateParams', '$location', 'Global', 'Comments',
   function($scope, $stateParams, $location, Global, Comments) {
-    $scope.comments = Comments;
-    console.log(Comments)
-    $scope.create = function(isValid) {
-      if (isValid) {
-        console.log('Sending the Comment the API')
-      } else {
-        $scope.submitted = true;
-      }
+    $scope.comments = Comments.getPosts('APPROVED');
+    $scope.collapseAddComment = false;
+    $scope.create = function(commentContent) {
+      console.info('Sending the Comment the API', commentContent)
     };
   }
 ]);
