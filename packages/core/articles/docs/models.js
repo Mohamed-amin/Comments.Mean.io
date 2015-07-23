@@ -41,5 +41,28 @@ exports.models = {
       }
 
     }
+  },
+  Comment: {
+    id: 'Comment',
+    required: ['content'],
+    properties: {
+      id: {
+        type: 'string',
+        description: 'Unique identifier for the Comment'
+      },
+      status: {
+        type: 'string',
+        description: 'Comment Status i.e Pending, approved or rejected'
+      },
+      content: {
+        type: 'string',
+        description: 'content of the Comment'
+      },
+      user: {
+        type: 'User',
+        description: 'User that created the Comment'
+      }
+
+    }
   }
 };

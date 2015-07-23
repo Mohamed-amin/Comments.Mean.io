@@ -3,7 +3,6 @@
 angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles', 'MeanUser', 'Circles',
   function($scope, $stateParams, $location, Global, Articles, MeanUser, Circles) {
     $scope.global = Global;
-
     $scope.hasAuthorization = function(article) {
       if (!article || !article.user) return false;
       return MeanUser.isAdmin || article.user._id === MeanUser.user._id;
