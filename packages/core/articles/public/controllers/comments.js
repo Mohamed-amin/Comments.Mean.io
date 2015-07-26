@@ -4,6 +4,7 @@ angular.module('mean.articles').controller('CommentsController', ['$scope', '$st
   function($scope, $stateParams, $location, Global, Comments) {
     $scope.comments = Comments.getPosts('APPROVED');
     $scope.collapseAddComment = false;
+    
     $scope.create = function(commentContent) {
       console.info('Sending the Comment the API', commentContent)
     };
