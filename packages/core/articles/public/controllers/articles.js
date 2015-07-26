@@ -86,7 +86,32 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
         articleId: $stateParams.articleId
       }, function(article) {
         $scope.article = article;
+        console.log(article)
       });
+    };
+
+    $scope.loadComments = function() {
+      Articles.get({
+        articleId: $stateParams.articleId
+      }, function(article) {
+        $scope.comments = article.comments;
+      });
+    };
+
+    $scope.saveComment = function() {
+        var article = $scope.article;
+        if (!article.updated) {
+          article.updated = [];
+        }
+        // console.log($scope.newComment.content)
+
+        $scope.article.comments.push({content: $scope.newComment.content})
+        article.updated.push(new Date().getTime());
+        article.status = 'PENDING';
+        console.log($scope.article)
+        article.$update(function() {
+          $location.path('articles/' + article._id);
+        });
     };
   }
 ]);

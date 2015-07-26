@@ -8,5 +8,12 @@ angular.module('mean.articles').controller('CommentsController', ['$scope', '$st
     $scope.create = function(commentContent) {
       console.info('Sending the Comment the API', commentContent)
     };
+
+    $scope.find = function() {
+      Comments.query(function(comments) {
+        $scope.comments = comments;
+      });
+    };
+
   }
 ]);

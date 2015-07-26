@@ -46,10 +46,6 @@ exports.models = {
     id: 'Comment',
     required: ['content'],
     properties: {
-      id: {
-        type: 'string',
-        description: 'Unique identifier for the Comment'
-      },
       status: {
         type: 'string',
         description: 'Comment Status i.e Pending, approved or rejected'
