@@ -6,6 +6,29 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+/**
+ * Comment Schema 
+ */
+var CommentSchema = new Schema({
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  content: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  status:{
+    type: String,
+    default: 'PENDING'
+  },
+  user: {
+    type: String,
+    required: true,
+  }
+})
+
 
 /**
  * Article Schema
@@ -34,6 +57,9 @@ var ArticleSchema = new Schema({
   },
   updated: {
     type: Array
+  },
+  comments :{
+    type : [CommentSchema]
   }
 });
 

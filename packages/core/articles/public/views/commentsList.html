@@ -1,0 +1,24 @@
+<section data-ng-controller="ArticlesController" data-ng-init="find()">
+  <ul class="articles unstyled">
+    <li data-ng-repeat="article in articles">
+      <h2>
+        <a data-ng-href="/articles/{{article._id}}">Comments of {{article.title}}</a>
+      </h2>
+      <span>{{article.user.name}}</span>
+      <span>{{article.created | date:'medium'}}</span> /
+      <div data-ng-repeat="comment in article.comments" data-ng-if="comment.status === 'PENDING'" class="well">
+        <span class="label label-warning">{{comment.status}}</span>
+        <p>{{comment.content}}</p>
+        <small>{{comment.created | date:'medium'}}</small> 
+        <span data-ng-if="hasAuthorization(article)">
+            <a class="btn" href="#" data-ng-click="removeComment(article, comment);">
+              <i class="glyphicon glyphicon-trash"></i>
+            </a>
+            <a class="btn" href="#" data-ng-click="approveComment(article, comment);">
+              <i class="glyphicon glyphicon-ok"></i>
+            </a>
+        </span>
+      </div>
+    </li>
+  </ul>
+</section>

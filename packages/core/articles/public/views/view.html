@@ -11,4 +11,28 @@
     </a>
   </div>
   <div>{{article.content}}</div>
+  <section style="margin-top:20px;">
+      <section class="well">
+        <a href="#" class="btn btn-primary" data-ng-click="collapseAddComment = !collapseAddComment"> Add Comment </a>
+        <form class="form-inline" name="commentForm" ng-class="{ 'hidden' : !collapseAddComment, 'has-error' : submitted && commentForm.commentEntry.$invalid }" data-ng-submit="saveComment()">
+            <p>{{MeanUser.user.name}}</p>
+            <div class="form-group">
+                <textarea class="form-control" name="commentEntry" data-ng-model="newComment.content" placeholder="Your comment ..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" data-ng-click="submitted = true" data-ng-disbale="commentForm.commentEntry.$invalid ">Submit</button>
+            <p class="alert alert-success" data-ng-show="saved">your comment has been sent, will be added after admin approval</p>
+        </form>
+        <div ng-show="submitted && commentForm.commentEntry.$error.required" class="help-block has-error">
+          <p class="help-block has-error" >Comment is required</p>
+        </div>
+      </section>
+      <div data-ng-repeat='comment in article.comments' data-ng-if="comment.status === 'APPROVED' " style="margin-top:10px;" class="well">
+        <h4><i class="glyphicon glyphicon-user"></i> <span>{{comment.user}}</span></h4>
+        <span>{{comment.createdAt | date}}</span> 
+        <p>{{comment.content}}</p>
+        
+      </div>
+      <br>
 </section>
+</section>
+
