@@ -6,12 +6,16 @@
       </h2>
       <span>{{article.user.name}}</span>
       <span>{{article.created | date:'medium'}}</span> /
-      <div data-ng-repeat="comment in article.comments" class="well">
+      <div data-ng-repeat="comment in article.comments" data-ng-if="comment.status === 'PENDING'" class="well">
+        <span class="label label-warning">{{comment.status}}</span>
         <p>{{comment.content}}</p>
         <small>{{comment.created | date:'medium'}}</small> 
         <span data-ng-if="hasAuthorization(article)">
-            <a class="btn" data-ng-click="removeComment(comment);">
+            <a class="btn" href="#" data-ng-click="removeComment(article, comment);">
               <i class="glyphicon glyphicon-trash"></i>
+            </a>
+            <a class="btn" href="#" data-ng-click="approveComment(article, comment);">
+              <i class="glyphicon glyphicon-ok"></i>
             </a>
         </span>
       </div>

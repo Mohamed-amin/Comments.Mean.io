@@ -19,9 +19,13 @@ var CommentSchema = new Schema({
     required: true,
     trim: true
   },
+  status:{
+    type: String,
+    default: 'PENDING'
+  },
   user: {
-    type: Schema.ObjectId,
-    ref: 'User'
+    type: String,
+    required: true,
   }
 })
 

@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles', 'MeanUser', 'Circles',
-  function($scope, $stateParams, $location, Global, Articles, MeanUser, Circles) {
+angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', '$timeout', 'Global', 'Articles', 'MeanUser', 'Circles',
+  function($scope, $stateParams, $location, $timeout, Global, Articles, MeanUser, Circles) {
     $scope.global = Global;
     $scope.hasAuthorization = function(article) {
       if (!article || !article.user) return false;
       return MeanUser.isAdmin || article.user._id === MeanUser.user._id;
     };
-
     $scope.availableCircles = [];
-
+    $scope.MeanUser = MeanUser;
     Circles.mine(function(acl) {
         $scope.availableCircles = acl.allowed;
         $scope.allDescendants = acl.descendants;
@@ -78,7 +77,6 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
     $scope.find = function() {
       Articles.query(function(articles) {
         $scope.articles = articles;
-        console.log(articles)
 
       });
     };
@@ -88,15 +86,6 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
         articleId: $stateParams.articleId
       }, function(article) {
         $scope.article = article;
-        console.log(article)
-      });
-    };
-
-    $scope.loadComments = function() {
-      Articles.get({
-        articleId: $stateParams.articleId
-      }, function(article) {
-        $scope.comments = article.comments;
       });
     };
 
@@ -105,29 +94,47 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
         if (!article.updated) {
           article.updated = [];
         }
-        // console.log($scope.newComment.content)
-
-        $scope.article.comments.push({content: $scope.newComment.content})
+        var newComment = {
+            content: $scope.newComment.content,
+            user: MeanUser.user.name,
+            status: 'PENDING'
+        }
+        $scope.article.comments.push(newComment)
+        console.log($scope.article.comments)
         article.updated.push(new Date().getTime());
-        article.status = 'PENDING';
-        console.log($scope.article)
-        article.$update(function() {
-          $location.path('articles/' + article._id);
+        article.$update(function(){
+          $scope.saved = true;
+          $timeout( function(){ $scope.saved = false }, 3000);
         });
-    };
-    
-    $scope.removeComment = function(comment) {
 
+    };
+    $scope.approveComment = function(article, comment){
+       if (comment) {
+           _.map(article.comments, function(cm) {
+               if (comment.$$hashKey === cm.$$hashKey){
+                  comment.status = 'APPROVED';
+                  console.log(comment)
+               }
+           });
+
+           if (!article.updated) {
+               article.updated = [];
+           }
+           article.updated.push(new Date().getTime());
+           article.$update();
+       }
+    };
+    $scope.removeComment = function(article, comment) {
       if (comment) {
+        _.remove(article.comments, function(cm) {
+          return comment.$$hashKey === cm.$$hashKey;
+        });
         
-        var article = $scope.article;
         if (!article.updated) {
           article.updated = [];
         }
         article.updated.push(new Date().getTime());
-        article.$update(function() {
-          $location.path('articles/' + article._id);
-        });
+        article.$update();
       }
     };
 
