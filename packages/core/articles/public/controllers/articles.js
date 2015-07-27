@@ -78,6 +78,8 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
     $scope.find = function() {
       Articles.query(function(articles) {
         $scope.articles = articles;
+        console.log(articles)
+
       });
     };
 
@@ -113,5 +115,21 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
           $location.path('articles/' + article._id);
         });
     };
+    
+    $scope.removeComment = function(comment) {
+
+      if (comment) {
+        
+        var article = $scope.article;
+        if (!article.updated) {
+          article.updated = [];
+        }
+        article.updated.push(new Date().getTime());
+        article.$update(function() {
+          $location.path('articles/' + article._id);
+        });
+      }
+    };
+
   }
 ]);

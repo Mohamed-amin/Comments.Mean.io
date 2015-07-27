@@ -23,14 +23,18 @@ Articles.register(function(app, auth, database, circles, swagger) {
   Articles.menus.add({
     'roles': ['authenticated'],
     'title': 'Articles',
-    'link': 'all articles'
+    'link': 'all articles',
   });
   Articles.menus.add({
     'roles': ['authenticated'],
     'title': 'Create New Article',
     'link': 'create article'
   });
-
+  Articles.menus.add({
+    'roles': ['authenticated'],
+    'title': 'Manage Comments',
+    'link': 'all comments'
+  });
   Articles.events.design({
     //http://fontawesome.io/icons
     icon: 'fa-file-text',
